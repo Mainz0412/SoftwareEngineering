@@ -11,21 +11,28 @@ import javax.annotation.Resource;
 import java.util.List;
 
 /**
+ * REST controller for reservation (booking) operations.
+ *
+ * 提供新增、更新、删除及查询预约的接口。
+ *
  * @author Ruijie Zhao
+ * @since 1.0
  */
 @RestController
 @RequestMapping("/reserve")
 public class ReserveController {
+
     @Resource
     ReserveService reserveService;
+
     @Resource
     SeatTimeService seatTimeService;
 
     /**
-     * 新增预约
+     * 新增预约。
      *
      * @param reserve 预约信息
-     * @return 完成结果
+     * @return 操作结果
      */
     @PostMapping("/add")
     public AjaxResult reserve(@RequestBody Reserve reserve) {
@@ -33,53 +40,50 @@ public class ReserveController {
         if (seatTime == null) {
             return AjaxResult.error("座位已被占用");
         }
+
         reserveService.insertReserve(reserve);
         seatTimeService.updateSeatReserve(reserve, seatTime);
         return AjaxResult.success();
     }
 
     /**
-     * 更新预约信息
+     * 更新预约信息。
      *
      * @param reserve 预约信息
-     * @return msg结果
+     * @return 操作结果
      */
     @PutMapping("/update")
     public AjaxResult update(@RequestBody Reserve reserve) {
-        //找到原来的seatTime
         SeatTime preSeatTime = seatTimeService.findSeatTime(reserve);
-        //占用座位
+
         SeatTime seatTime = seatTimeService.occupySeat(reserve);
         if (seatTime == null) {
             return AjaxResult.error("座位已被占用");
         }
-        //释放原座位
+
         seatTimeService.releaseSeat(preSeatTime);
-        //更新结果
         reserveService.updateReserve(reserve);
         return AjaxResult.success();
     }
 
     /**
-     * 删除预约
+     * 删除预约。
      *
      * @param reserve 预约信息
-     * @return msg结果
+     * @return 操作结果
      */
     @DeleteMapping("/delete")
     public AjaxResult delete(@RequestBody Reserve reserve) {
-        //释放座位
         seatTimeService.deleteSeat(reserve);
-        //删除预约
         reserveService.deleteReserve(reserve);
         return AjaxResult.success();
     }
 
     /**
-     * 获得用户预约list
+     * 查询指定用户的预约列表。
      *
-     * @param userAccount 用户
-     * @return 用户预约list
+     * @param userAccount 用户账号
+     * @return 该用户的预约列表
      */
     @GetMapping(value = "/list")
     public List<Reserve> list(@RequestParam("userAccount") String userAccount) {
@@ -87,12 +91,13 @@ public class ReserveController {
     }
 
     /**
-     * 获得所有预约list
+     * 查询所有预约。
      *
-     * @return 用户预约list
+     * @return 所有预约列表
      */
     @GetMapping(value = "/all")
     public List<Reserve> listAll() {
         return reserveService.selectAllList();
     }
+
 }
