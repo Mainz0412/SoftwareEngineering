@@ -11,7 +11,8 @@ import lombok.Data;
 @TableName("room")
 @Data
 public class Room {
-    @TableId(type = IdType.AUTO)
-    private Integer roomId;
-    private String roomName;
+  @TableId(type = IdType.AUTO)
+  private Integer roomId;
+
+  private String roomName;
 }

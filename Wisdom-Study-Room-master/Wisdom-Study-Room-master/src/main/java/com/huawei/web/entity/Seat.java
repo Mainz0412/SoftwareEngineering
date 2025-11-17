@@ -12,10 +12,12 @@ import lombok.Data;
 @TableName("seat")
 @Data
 public class Seat {
-    @TableId(type = IdType.AUTO)
-    private Integer seatId;
-    @TableField("seat_number")
-    private String seatNumber;
-    @TableField("room_id")
-    private Integer roomId;
+  @TableId(type = IdType.AUTO)
+  private Integer seatId;
+
+  @TableField("seat_number")
+  private String seatNumber;
+
+  @TableField("room_id")
+  private Integer roomId;
 }

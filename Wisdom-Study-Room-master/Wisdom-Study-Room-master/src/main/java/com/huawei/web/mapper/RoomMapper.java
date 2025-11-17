@@ -8,6 +8,4 @@ import org.apache.ibatis.annotations.Mapper;
  * @author Ruijie Zhao
  */
 @Mapper
-public interface RoomMapper extends BaseMapper<Room> {
-
-}
+public interface RoomMapper extends BaseMapper<Room> {}

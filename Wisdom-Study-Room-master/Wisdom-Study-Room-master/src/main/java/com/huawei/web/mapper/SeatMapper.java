@@ -8,6 +8,4 @@ import org.apache.ibatis.annotations.Mapper;
  * @author Ruijie Zhao
  */
 @Mapper
-public interface SeatMapper extends BaseMapper<Seat> {
-
-}
+public interface SeatMapper extends BaseMapper<Seat> {}

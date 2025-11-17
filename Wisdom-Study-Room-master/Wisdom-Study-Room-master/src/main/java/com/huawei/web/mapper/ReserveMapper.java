@@ -8,6 +8,4 @@ import org.apache.ibatis.annotations.Mapper;
  * @author Ruijie Zhao
  */
 @Mapper
-public interface ReserveMapper extends BaseMapper<Reserve> {
-
-}
+public interface ReserveMapper extends BaseMapper<Reserve> {}

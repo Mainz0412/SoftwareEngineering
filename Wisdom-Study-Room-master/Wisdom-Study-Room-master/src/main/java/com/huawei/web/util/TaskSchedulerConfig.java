@@ -9,10 +9,10 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class TaskSchedulerConfig {
-    @Bean
-    public ThreadPoolTaskScheduler threadPoolTaskScheduler(){
-        ThreadPoolTaskScheduler threadPoolTaskScheduler = new ThreadPoolTaskScheduler();
-        threadPoolTaskScheduler.setPoolSize(10);
-        return threadPoolTaskScheduler;
-    }
+  @Bean
+  public ThreadPoolTaskScheduler threadPoolTaskScheduler() {
+    ThreadPoolTaskScheduler threadPoolTaskScheduler = new ThreadPoolTaskScheduler();
+    threadPoolTaskScheduler.setPoolSize(10);
+    return threadPoolTaskScheduler;
+  }
 }
