@@ -6,7 +6,7 @@ import com.huawei.web.service.ReserveService;
 import com.huawei.web.service.SeatTimeService;
 import com.huawei.web.util.AjaxResult;
 import java.util.List;
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
 
 /**

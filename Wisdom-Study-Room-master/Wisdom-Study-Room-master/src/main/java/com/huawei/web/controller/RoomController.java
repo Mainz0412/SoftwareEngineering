@@ -4,7 +4,7 @@ import com.huawei.web.entity.Room;
 import com.huawei.web.service.RoomService;
 import com.huawei.web.util.AjaxResult;
 import java.util.List;
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
 
 /**

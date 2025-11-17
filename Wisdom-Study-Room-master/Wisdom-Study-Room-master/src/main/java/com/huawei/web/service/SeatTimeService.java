@@ -8,7 +8,7 @@ import com.huawei.web.mapper.SeatMapper;
 import com.huawei.web.mapper.SeatTimeMapper;
 import java.sql.Timestamp;
 import java.util.List;
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 /**

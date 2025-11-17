@@ -8,7 +8,7 @@ import com.huawei.web.util.constant.Constant;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
