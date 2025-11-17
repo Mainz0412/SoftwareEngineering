@@ -105,4 +105,38 @@
         </plugins>
     </build>
 
+    <!-- Code formatting: Spotless plugin using google-java-format. -->
+    <!-- Run `mvn com.diffplug.spotless:spotless-maven-plugin:check` to validate formatting, -->
+    <!-- or `mvn com.diffplug.spotless:spotless-maven-plugin:apply` to auto-format. -->
+    <profiles>
+        <profile>
+            <id>enable-spotless</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>com.diffplug.spotless</groupId>
+                        <artifactId>spotless-maven-plugin</artifactId>
+                        <version>2.39.0</version>
+                        <configuration>
+                            <java>
+                                <googleJavaFormat>
+                                    <version>1.15.0</version>
+                                </googleJavaFormat>
+                                <removeUnusedImports>true</removeUnusedImports>
+                            </java>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>spotless-check</id>
+                                <goals>
+                                    <goal>check</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+
 </project>
