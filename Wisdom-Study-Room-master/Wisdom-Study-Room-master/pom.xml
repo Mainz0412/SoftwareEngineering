@@ -14,7 +14,9 @@
     <name>demo</name>
     <description>Demo project for Spring Boot</description>
     <properties>
-        <java.version>17</java.version>
+        <java.version>24</java.version>
+        <!-- Use maven.compiler.release to set the target bytecode and API level -->
+        <maven.compiler.release>${java.version}</maven.compiler.release>
     </properties>
     <dependencies>
         <dependency>
@@ -77,10 +79,10 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.10.1</version>
+                <version>3.11.0</version>
                 <configuration>
-                    <source>${java.version}</source>
-                    <target>${java.version}</target>
+                    <!-- use release to compile against Java 24 API and target Java 24 bytecode -->
+                    <release>${maven.compiler.release}</release>
                     <annotationProcessorPaths>
                         <path>
                             <groupId>org.projectlombok</groupId>
@@ -94,6 +96,9 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
+                    <!-- Skip repackaging temporarily because older repackage implementation
+                         may not support class files produced for Java 24 (major version 68). -->
+                    <skip>true</skip>
                     <excludes>
                         <exclude>
                             <groupId>org.projectlombok</groupId>
