@@ -8,8 +8,8 @@
           <!-- 触发元素改为头像 -->
           <el-avatar
             style="cursor: pointer;"
-            @mouseenter.native="showPopover = true"
-            @mouseleave.native="showPopover = false"
+            @mouseenter="showPopover = true"
+            @mouseleave="showPopover = false"
           >
             <img src="../assets/portrait.png" alt="用户头像">
           </el-avatar>
@@ -22,8 +22,8 @@
             :popper-options="{strategy: 'fixed', modifiers: { flip: { behavior: 'flip' }, preventOverflow: { padding: 10 } } }"
             :popper-append-to-body="false"
             v-model="showPopover"
-            @mouseenter.native="showPopover = true"
-            @mouseleave.native="showPopover = false"
+            @mouseenter="showPopover = true"
+            @mouseleave="showPopover = false"
           >
             <div>
               <h4>昵称: {{userData.userName}}</h4>
@@ -41,12 +41,14 @@
             <el-input v-model="userData.userName" placeholder="请输入新昵称"></el-input>
           </el-form-item>
         </el-form>
-        <div slot="footer" class="dialog-footer">
-          <el-button @click="modifyUseDialogTab = false" class="cancel-btn">
-            <i class="el-icon-close"></i>取消</el-button>
-          <el-button type="primary" @click="modifyNickname" class="save-btn">
-            <i class="el-icon-check"></i>修改</el-button>
-        </div>
+        <template #footer>
+          <div class="dialog-footer">
+            <el-button @click="modifyUseDialogTab = false" class="cancel-btn">
+              <i class="el-icon-close"></i>取消</el-button>
+            <el-button type="primary" @click="modifyNickname" class="save-btn">
+              <i class="el-icon-check"></i>修改</el-button>
+          </div>
+        </template>
       </el-dialog>
 
       <el-menu default-active="home" class="el-menu-horizontal-demo" @select="handleMenuSelect">
@@ -81,9 +83,11 @@
 
         <div class="card-container" v-else-if="activeMenuItem === 'mybook'">
           <el-card class="box-book-card" v-for="(booking, index) in bookings" :key="index">
-            <div slot="header" style="margin-top: 10px">
+            <template #header>
+              <div style="margin-top: 10px">
               <span class="bold">预约信息{{ index + 1 }}</span>
-            </div>
+              </div>
+            </template>
             <div style="margin-top: -18px">
               <p>日期: {{ booking.reserveTimeBegin.split(' ')[0] }}</p>
               <p>起始时间: {{ booking.reserveTimeBegin.split(' ')[1] }}</p>
@@ -97,9 +101,11 @@
 
         <div class="card-container" v-else-if="activeMenuItem === 'violation'">
           <el-card class="box-book-card" v-for="(vio, index) in violation" :key="index">
-            <div slot="header" style="margin-top: 10px">
+            <template #header>
+              <div style="margin-top: 10px">
               <span class="bold">违规信息{{ index + 1 }}</span>
-            </div>
+              </div>
+            </template>
             <div style="margin-top: -18px">
               <p style="margin-bottom: 40px">违规账号: {{vio.userAccount}}</p>
               <p style="margin-bottom: 40px">违规信息: {{vio.logState}}</p>
@@ -270,7 +276,7 @@
 
 <script>
 import axios from "axios";
-import {MessageBox} from "element-ui";
+import { ElMessageBox } from 'element-plus';
 export default {
   data() {
     return {
