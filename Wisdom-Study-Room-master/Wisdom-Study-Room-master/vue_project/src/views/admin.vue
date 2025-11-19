@@ -15,27 +15,27 @@
           <el-menu class="el-menu-vertical-demo" default-active="0" style="height: 100%;flex-grow: 1;margin: 0; padding: 0;" background-color="#304156" text-color="#fff" active-text-color="#409EFF">
             <el-menu-item index="0" @click="changeTab('home');" style="text-align: left;">
               <i class="el-icon-s-home"></i>
-              <span slot="title">主页</span>
+              <template #title><span>主页</span></template>
             </el-menu-item>
             <el-menu-item index="1" @click="changeTab('room'); loadRooms()" style="text-align: left;">
               <i class="el-icon-house"></i>
-              <span slot="title">自习室管理</span>
+              <template #title><span>自习室管理</span></template>
             </el-menu-item>
             <el-menu-item index="2" @click="changeTab('seat'); loadSeats()" style="text-align: left;">
               <i class="el-icon-s-management"></i>
-              <span slot="title">座位管理</span>
+              <template #title><span>座位管理</span></template>
             </el-menu-item>
             <el-menu-item index="3" @click="changeTab('reserve'); loadReserve()" style="text-align: left;">
               <i class="el-icon-s-order"></i>
-              <span slot="title">预约管理</span>
+              <template #title><span>预约管理</span></template>
             </el-menu-item>
             <el-menu-item index="4" @click="changeTab('user'); loadUsers()" style="text-align: left;">
               <i class="el-icon-user"></i>
-              <span slot="title">用户管理</span>
+              <template #title><span>用户管理</span></template>
             </el-menu-item>
             <el-menu-item index="5" @click="changeTab('violation'); loadViolations()" style="text-align: left;">
               <i class="el-icon-warning"></i>
-              <span slot="title">违规信息</span>
+              <template #title><span>违规信息</span></template>
             </el-menu-item>
 
           </el-menu>
@@ -91,7 +91,7 @@
               <el-table-column prop="timeSignOut" label="签退时间" sortable>
               </el-table-column>
               <el-table-column label="操作" width="200" style="display: flex;">
-                <template slot-scope="scope">
+                <template v-slot="scope">
                   <el-button type="primary" plain @click="editReserve(scope.row)" class="edit-btn">
                     <i class="el-icon-edit"></i>编辑</el-button>
                   <el-button type="danger" plain @click="deleteReserve(scope)" class="delete-btn">
@@ -123,7 +123,7 @@
               <el-table-column prop="roomName" label="自习室名称" sortable>
               </el-table-column>
               <el-table-column label="操作" width="200" style="display: flex;">
-                <template slot-scope="scope">
+                <template v-slot="scope">
                   <el-button type="primary" plain @click="editRoom(scope.row)" class="edit-btn">
                     <i class="el-icon-edit"></i>编辑</el-button>
                   <el-button type="danger" plain @click="deleteRoom(scope)" class="delete-btn">
@@ -155,7 +155,7 @@
               <el-table-column prop="seatNumber" label="座位编号" sortable></el-table-column>
               <el-table-column prop="roomName" label="所在自习室" sortable></el-table-column>
               <el-table-column label="操作" width="200" style="display: flex;">
-                <template slot-scope="scope">
+                <template v-slot="scope">
                   <el-button type="primary" plain @click="editSeat(scope.row)" class="edit-btn">
                     <i class="el-icon-edit"></i>编辑
                   </el-button>
@@ -190,7 +190,7 @@
               <el-table-column prop="userName" label="用户名" sortable>
               </el-table-column>
               <el-table-column prop="userPassword" label="密码">
-                <template slot-scope="scope">
+                <template v-slot="scope">
                    <span v-if="scope.row.showPassword" style="cursor: pointer;" @click="togglePassword(scope.row)">
                     {{ scope.row.userPassword }}
                    </span>
@@ -208,7 +208,7 @@
               <el-table-column prop="userIllegalDate" label="封禁截至日期" sortable>
               </el-table-column>
               <el-table-column label="操作" width="200" style="display: flex;">
-                <template slot-scope="scope">
+                <template v-slot="scope">
                   <el-button type="primary" plain @click="editUser(scope.row)" class="edit-btn">
                     <i class="el-icon-edit"></i>编辑</el-button>
                   <el-button type="danger" plain @click="deleteUser(scope)" class="delete-btn">
@@ -244,7 +244,7 @@
               <el-table-column prop="logTime" label="违规时间" sortable>
               </el-table-column>
               <el-table-column label="操作" width="200" style="display: flex;">
-                <template slot-scope="scope">
+                <template v-slot="scope">
                   <!-- 编辑违规信息按钮 -->
                   <el-button type="primary" plain @click="editViolation(scope.row)" class="edit-btn">
                     <i class="el-icon-edit"></i>编辑
@@ -272,14 +272,16 @@
               </el-form-item>
               <!-- 其他表单项... -->
             </el-form>
-            <div slot="footer" class="dialog-footer">
-              <el-button @click="cancelAddViolation" class="cancel-btn">
-                <i class="el-icon-close"></i>取消
-              </el-button>
-              <el-button type="primary" @click="saveNewViolation" class="save-btn">
-                <i class="el-icon-check"></i>保存
-              </el-button>
-            </div>
+            <template #footer>
+              <div class="dialog-footer">
+                <el-button @click="cancelAddViolation" class="cancel-btn">
+                  <i class="el-icon-close"></i>取消
+                </el-button>
+                <el-button type="primary" @click="saveNewViolation" class="save-btn">
+                  <i class="el-icon-check"></i>保存
+                </el-button>
+              </div>
+            </template>
           </el-dialog>
 
           <!-- 编辑违规信息面板 -->
@@ -307,24 +309,28 @@
               </el-form-item>
             </el-form>
             <!-- 用户操作按钮 -->
-            <div slot="footer" class="dialog-footer">
-              <el-button @click="editViolationDialogVisible = false" class="cancel-btn">
-                <i class="el-icon-close"></i>取消</el-button>
-              <el-button type="primary" @click="saveEditedViolation" class="save-btn">
-                <i class="el-icon-check"></i>保存</el-button>
-            </div>
+            <template #footer>
+              <div class="dialog-footer">
+                <el-button @click="editViolationDialogVisible = false" class="cancel-btn">
+                  <i class="el-icon-close"></i>取消</el-button>
+                <el-button type="primary" @click="saveEditedViolation" class="save-btn">
+                  <i class="el-icon-check"></i>保存</el-button>
+              </div>
+            </template>
           </el-dialog>
 
           <!-- 删除违规确认对话框 -->
           <el-dialog title="提示" :visible.sync="deleteViolationDialogVisible" width="30%">
             <span>确认删除该违规信息吗？</span>
             <!-- 操作按钮 -->
-            <div slot="footer" class="dialog-footer">
-              <el-button @click="deleteViolationDialogVisible = false" class="cancel-btn">
-                <i class="el-icon-close"></i>取消</el-button>
-              <el-button type="danger" @click="confirmDeleteViolation" class="delete-btn">
-                <i class="el-icon-delete"></i>删除</el-button>
-            </div>
+            <template #footer>
+              <div class="dialog-footer">
+                <el-button @click="deleteViolationDialogVisible = false" class="cancel-btn">
+                  <i class="el-icon-close"></i>取消</el-button>
+                <el-button type="danger" @click="confirmDeleteViolation" class="delete-btn">
+                  <i class="el-icon-delete"></i>删除</el-button>
+              </div>
+            </template>
           </el-dialog>
 
           <!-- 编辑自习室信息面板 -->
@@ -337,24 +343,28 @@
               <!-- 其他表单项 -->
             </el-form>
             <!-- 自习室操作按钮 -->
-            <div slot="footer" class="dialog-footer">
-              <el-button @click="editRoomDialogVisible = false" class="cancel-btn">
-                <i class="el-icon-close"></i>取消</el-button>
-              <el-button type="primary" @click="saveEditedRoom" class="save-btn">
-                <i class="el-icon-check"></i>保存</el-button>
-            </div>
+            <template #footer>
+              <div class="dialog-footer">
+                <el-button @click="editRoomDialogVisible = false" class="cancel-btn">
+                  <i class="el-icon-close"></i>取消</el-button>
+                <el-button type="primary" @click="saveEditedRoom" class="save-btn">
+                  <i class="el-icon-check"></i>保存</el-button>
+              </div>
+            </template>
           </el-dialog>
 
           <!-- 删除自习室确认对话框 -->
           <el-dialog title="提示" :visible.sync="deleteRoomDialogVisible" width="30%">
             <span>确认删除该自习室吗？</span>
             <!-- 操作按钮 -->
-            <div slot="footer" class="dialog-footer">
-              <el-button @click="deleteRoomDialogVisible = false" class="cancel-btn">
-                <i class="el-icon-close"></i>取消</el-button>
-              <el-button type="danger" @click="confirmDeleteRoom" class="delete-btn">
-                <i class="el-icon-delete"></i>删除</el-button>
-            </div>
+            <template #footer>
+              <div class="dialog-footer">
+                <el-button @click="deleteRoomDialogVisible = false" class="cancel-btn">
+                  <i class="el-icon-close"></i>取消</el-button>
+                <el-button type="danger" @click="confirmDeleteRoom" class="delete-btn">
+                  <i class="el-icon-delete"></i>删除</el-button>
+              </div>
+            </template>
           </el-dialog>
 
           <!-- 添加自习室对话框 -->
@@ -364,12 +374,14 @@
                 <el-input v-model="newRoom.roomName" placeholder="请输入自习室名称"></el-input>
               </el-form-item>
             </el-form>
-            <div slot="footer" class="dialog-footer">
-              <el-button @click="cancelAddRoom" class="cancel-btn">
-                <i class="el-icon-close"></i>取消</el-button>
-              <el-button type="primary" @click="saveNewRoom" class="save-btn">
-                <i class="el-icon-check"></i>保存</el-button>
-            </div>
+            <template #footer>
+              <div class="dialog-footer">
+                <el-button @click="cancelAddRoom" class="cancel-btn">
+                  <i class="el-icon-close"></i>取消</el-button>
+                <el-button type="primary" @click="saveNewRoom" class="save-btn">
+                  <i class="el-icon-check"></i>保存</el-button>
+              </div>
+            </template>
           </el-dialog>
 
           <!-- 编辑座位信息面板 -->
@@ -387,24 +399,28 @@
               <!-- 其他表单项 -->
             </el-form>
             <!-- 座位操作按钮 -->
-            <div slot="footer" class="dialog-footer">
-              <el-button @click="editSeatDialogVisible = false" class="cancel-btn">
-                <i class="el-icon-close"></i>取消</el-button>
-              <el-button type="primary" @click="saveEditedSeat" class="save-btn">
-                <i class="el-icon-check"></i>保存</el-button>
-            </div>
+            <template #footer>
+              <div class="dialog-footer">
+                <el-button @click="editSeatDialogVisible = false" class="cancel-btn">
+                  <i class="el-icon-close"></i>取消</el-button>
+                <el-button type="primary" @click="saveEditedSeat" class="save-btn">
+                  <i class="el-icon-check"></i>保存</el-button>
+              </div>
+            </template>
           </el-dialog>
 
           <!-- 删除座位确认对话框 -->
           <el-dialog title="提示" :visible.sync="deleteSeatDialogVisible" width="30%">
             <span>确认删除该座位吗？</span>
             <!-- 操作按钮 -->
-            <div slot="footer" class="dialog-footer" >
-              <el-button tyoe="default" @click="deleteSeatDialogVisible = false" class="cancel-btn">
-                <i class="el-icon-close"></i>取消</el-button>
-              <el-button type="danger" @click="confirmDeleteSeat" class="delete-btn">
-                <i class="el-icon-delete"></i>删除</el-button>
-            </div>
+            <template #footer>
+              <div class="dialog-footer">
+                <el-button tyoe="default" @click="deleteSeatDialogVisible = false" class="cancel-btn">
+                  <i class="el-icon-close"></i>取消</el-button>
+                <el-button type="danger" @click="confirmDeleteSeat" class="delete-btn">
+                  <i class="el-icon-delete"></i>删除</el-button>
+              </div>
+            </template>
           </el-dialog>
 
           <!-- 添加座位对话框 -->
@@ -419,24 +435,28 @@
                 </el-select>
               </el-form-item>
             </el-form>
-            <div slot="footer" class="dialog-footer">
-              <el-button @click="cancelAddSeat" class="cancel-btn">
-                <i class="el-icon-close"></i>取消</el-button>
-              <el-button type="primary" @click="saveNewSeat" class="save-btn">
-                <i class="el-icon-check"></i>保存</el-button>
-            </div>
+            <template #footer>
+              <div class="dialog-footer">
+                <el-button @click="cancelAddSeat" class="cancel-btn">
+                  <i class="el-icon-close"></i>取消</el-button>
+                <el-button type="primary" @click="saveNewSeat" class="save-btn">
+                  <i class="el-icon-check"></i>保存</el-button>
+              </div>
+            </template>
           </el-dialog>
 
           <!-- 删除预约信息确认对话框 -->
           <el-dialog title="提示" :visible.sync="deleteReserveDialogVisible" width="30%">
             <span>确认删除该预约吗？</span>
             <!-- 操作按钮 -->
-            <div slot="footer" class="dialog-footer">
-              <el-button @click="deleteReserveDialogVisible = false" class="cancel-btn">
-                <i class="el-icon-close"></i>取消</el-button>
-              <el-button type="danger" @click="confirmDeleteReserve" class="delete-btn">
-                <i class="el-icon-delete"></i>删除</el-button>
-            </div>
+            <template #footer>
+              <div class="dialog-footer">
+                <el-button @click="deleteReserveDialogVisible = false" class="cancel-btn">
+                  <i class="el-icon-close"></i>取消</el-button>
+                <el-button type="danger" @click="confirmDeleteReserve" class="delete-btn">
+                  <i class="el-icon-delete"></i>删除</el-button>
+              </div>
+            </template>
           </el-dialog>
 
           <!-- 编辑预约信息面板 -->
@@ -482,12 +502,14 @@
               <!-- 其他表单项 -->
             </el-form>
             <!-- 自习室操作按钮 -->
-            <div slot="footer" class="dialog-footer">
-              <el-button @click="editReserveDialogVisible = false" class="cancel-btn">
-                <i class="el-icon-close"></i>取消</el-button>
-              <el-button type="primary" @click="saveEditedReserve" class="save-btn">
-                <i class="el-icon-check"></i>保存</el-button>
-            </div>
+            <template #footer>
+              <div class="dialog-footer">
+                <el-button @click="editReserveDialogVisible = false" class="cancel-btn">
+                  <i class="el-icon-close"></i>取消</el-button>
+                <el-button type="primary" @click="saveEditedReserve" class="save-btn">
+                  <i class="el-icon-check"></i>保存</el-button>
+              </div>
+            </template>
           </el-dialog>
 
           <!-- 添加预约信息对话框 -->
@@ -530,12 +552,14 @@
                 ></el-date-picker>
               </el-form-item>
             </el-form>
-            <div slot="footer" class="dialog-footer">
-              <el-button @click="cancelAddReserve" class="cancel-btn">
-                <i class="el-icon-close"></i>取消</el-button>
-              <el-button type="primary" @click="saveNewReserve" class="save-btn">
-                <i class="el-icon-check"></i>保存</el-button>
-            </div>
+            <template #footer>
+              <div class="dialog-footer">
+                <el-button @click="cancelAddReserve" class="cancel-btn">
+                  <i class="el-icon-close"></i>取消</el-button>
+                <el-button type="primary" @click="saveNewReserve" class="save-btn">
+                  <i class="el-icon-check"></i>保存</el-button>
+              </div>
+            </template>
           </el-dialog>
 
           <!-- 编辑用户信息面板 -->
@@ -563,24 +587,28 @@
               </el-form-item>
             </el-form>
             <!-- 用户操作按钮 -->
-            <div slot="footer" class="dialog-footer">
-              <el-button @click="editUserDialogVisible = false" class="cancel-btn">
-                <i class="el-icon-close"></i>取消</el-button>
-              <el-button type="primary" @click="saveEditedUser" class="save-btn">
-                <i class="el-icon-check"></i>保存</el-button>
-            </div>
+            <template #footer>
+              <div class="dialog-footer">
+                <el-button @click="editUserDialogVisible = false" class="cancel-btn">
+                  <i class="el-icon-close"></i>取消</el-button>
+                <el-button type="primary" @click="saveEditedUser" class="save-btn">
+                  <i class="el-icon-check"></i>保存</el-button>
+              </div>
+            </template>
           </el-dialog>
 
           <!-- 删除用户确认对话框 -->
           <el-dialog title="提示" :visible.sync="deleteUserDialogVisible" width="30%">
             <span>确认删除该用户吗？</span>
             <!-- 操作按钮 -->
-            <div slot="footer" class="dialog-footer">
-              <el-button @click="deleteUserDialogVisible = false" class="cancel-btn">
-                <i class="el-icon-close"></i>取消</el-button>
-              <el-button type="danger" @click="confirmDeleteUser" class="delete-btn">
-                <i class="el-icon-delete"></i>删除</el-button>
-            </div>
+            <template #footer>
+              <div class="dialog-footer">
+                <el-button @click="deleteUserDialogVisible = false" class="cancel-btn">
+                  <i class="el-icon-close"></i>取消</el-button>
+                <el-button type="danger" @click="confirmDeleteUser" class="delete-btn">
+                  <i class="el-icon-delete"></i>删除</el-button>
+              </div>
+            </template>
           </el-dialog>
 
           <!-- 添加用户对话框 -->
@@ -599,12 +627,14 @@
                 <el-input v-model="newUser.userPrivilege" placeholder="请输入权限"></el-input>
               </el-form-item>
             </el-form>
-            <div slot="footer" class="dialog-footer">
-              <el-button @click="cancelAddUser" class="cancel-btn">
-                <i class="el-icon-close"></i>取消</el-button>
-              <el-button type="primary" @click="saveNewUser" class="save-btn">
-                <i class="el-icon-check"></i>保存</el-button>
-            </div>
+            <template #footer>
+              <div class="dialog-footer">
+                <el-button @click="cancelAddUser" class="cancel-btn">
+                  <i class="el-icon-close"></i>取消</el-button>
+                <el-button type="primary" @click="saveNewUser" class="save-btn">
+                  <i class="el-icon-check"></i>保存</el-button>
+              </div>
+            </template>
           </el-dialog>
         </el-main>
       </el-container>
@@ -614,7 +644,7 @@
 
 <script>
 import axios from "axios";
-import { MessageBox } from 'element-ui';
+import { ElMessageBox, ElMessage } from 'element-plus';
 export default {
   data() {
     return {
@@ -824,17 +854,14 @@ export default {
     //退出登录
     // 退出登录并显示确认弹窗
     Logout() {
-      MessageBox.confirm('您确定要退出吗？', '提示', {
+      ElMessageBox.confirm('您确定要退出吗？', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        // 执行退出操作
         sessionStorage.removeItem('userAccount');
-        this.$router.push('/LoginView'); // 假设这是登录页面的路由路径
-      }).catch(() => {
-        // 用户取消了操作，可以在这里实现一些逻辑，或者什么都不做
-      });
+        this.$router.push('/LoginView');
+      }).catch(() => {});
     },
     // 排序数据
     sortData(data, { prop, order }) {
@@ -1130,7 +1157,7 @@ export default {
     },
     togglePassword(row) {//用户密码隐藏
       // 切换当前行的 showPassword 状态
-      this.$set(row, 'showPassword', !row.showPassword);
+      row.showPassword = !row.showPassword;
     },
     // 编辑用户信息
     editUser(user) {
