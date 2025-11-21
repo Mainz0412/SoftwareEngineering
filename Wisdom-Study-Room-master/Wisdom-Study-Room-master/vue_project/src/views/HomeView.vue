@@ -44,9 +44,9 @@
         <template #footer>
           <div class="dialog-footer">
             <el-button @click="modifyUseDialogTab = false" class="cancel-btn">
-              <i class="el-icon-close"></i>取消</el-button>
+              <el-icon><Close /></el-icon>取消</el-button>
             <el-button type="primary" @click="modifyNickname" class="save-btn">
-              <i class="el-icon-check"></i>修改</el-button>
+              <el-icon><Check /></el-icon>修改</el-button>
           </div>
         </template>
       </el-dialog>

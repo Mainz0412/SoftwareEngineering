@@ -14,6 +14,15 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @Component
 public class TokenUtils {
+
+  // 实际生产中应从配置文件读取，这里为了演示使用固定强密钥
+  private static String SECRET;
+
+  @org.springframework.beans.factory.annotation.Value("${jwt.secret}")
+  public void setSecret(String secret) {
+    TokenUtils.SECRET = secret;
+  }
+
   /**
    * 生成token
    *
@@ -24,6 +33,15 @@ public class TokenUtils {
     return JWT.create()
         .withExpiresAt(DateUtil.offsetDay(new Date(), 1))
         .withAudience(user.getUserAccount())
-        .sign(Algorithm.HMAC256(user.getUserPrivilege().toString()));
+        .sign(Algorithm.HMAC256(SECRET));
+  }
+
+  /**
+   * 验证token
+   * 
+   * @param token
+   */
+  public static void verify(String token) {
+    JWT.require(Algorithm.HMAC256(SECRET)).build().verify(token);
   }
 }

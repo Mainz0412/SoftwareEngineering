@@ -14,27 +14,27 @@
         <el-aside width="200px" >
           <el-menu class="el-menu-vertical-demo" default-active="0" style="height: 100%;flex-grow: 1;margin: 0; padding: 0;" background-color="#304156" text-color="#fff" active-text-color="#409EFF">
             <el-menu-item index="0" @click="changeTab('home');" style="text-align: left;">
-              <i class="el-icon-s-home"></i>
+              <el-icon><HomeFilled /></el-icon>
               <template #title><span>主页</span></template>
             </el-menu-item>
             <el-menu-item index="1" @click="changeTab('room'); loadRooms()" style="text-align: left;">
-              <i class="el-icon-house"></i>
+              <el-icon><House /></el-icon>
               <template #title><span>自习室管理</span></template>
             </el-menu-item>
             <el-menu-item index="2" @click="changeTab('seat'); loadSeats()" style="text-align: left;">
-              <i class="el-icon-s-management"></i>
+              <el-icon><Menu /></el-icon>
               <template #title><span>座位管理</span></template>
             </el-menu-item>
             <el-menu-item index="3" @click="changeTab('reserve'); loadReserve()" style="text-align: left;">
-              <i class="el-icon-s-order"></i>
+              <el-icon><Tickets /></el-icon>
               <template #title><span>预约管理</span></template>
             </el-menu-item>
             <el-menu-item index="4" @click="changeTab('user'); loadUsers()" style="text-align: left;">
-              <i class="el-icon-user"></i>
+              <el-icon><User /></el-icon>
               <template #title><span>用户管理</span></template>
             </el-menu-item>
             <el-menu-item index="5" @click="changeTab('violation'); loadViolations()" style="text-align: left;">
-              <i class="el-icon-warning"></i>
+              <el-icon><Warning /></el-icon>
               <template #title><span>违规信息</span></template>
             </el-menu-item>
 
@@ -49,7 +49,7 @@
               <div class="admin-info">
                 <h3>{{changelab()}}</h3>
                 <div class="weather">
-                  <i class="el-icon-heavy-rain"></i>
+                  <el-icon><Pouring /></el-icon>
                   <span>今日阴转小雨，22℃ - 32℃，出门记得带伞哦。</span>
                 </div>
               </div>
@@ -68,7 +68,7 @@
             <!-- 添加预约信息按钮 -->
             <div style="display: flex;">
               <el-button type="primary"  @click="showAddReserveDialog" class="add-btn" >
-                <i class="el-icon-document-add"></i>添加预约</el-button>
+                <el-icon><DocumentAdd /></el-icon>添加预约</el-button>
             </div>
             <el-table :data="filteredReserveData"
                       :sortable="true"
@@ -93,9 +93,9 @@
               <el-table-column label="操作" width="200" style="display: flex;">
                 <template v-slot="scope">
                   <el-button type="primary" plain @click="editReserve(scope.row)" class="edit-btn">
-                    <i class="el-icon-edit"></i>编辑</el-button>
+                    <el-icon><Edit /></el-icon>编辑</el-button>
                   <el-button type="danger" plain @click="deleteReserve(scope)" class="delete-btn">
-                    <i class="el-icon-delete"></i>删除</el-button>
+                    <el-icon><Delete /></el-icon>删除</el-button>
                 </template>
               </el-table-column>
             </el-table>
@@ -111,7 +111,7 @@
             <!-- 添加自习室按钮 -->
             <div style="display: flex;">
               <el-button type="primary"  @click="showAddRoomDialog" class="add-btn" >
-                <i class="el-icon-document-add"></i>添加自习室</el-button>
+                <el-icon><DocumentAdd /></el-icon>添加自习室</el-button>
             </div>
             <!-- 自习室列表 -->
             <el-table :data="filteredRoomData"
@@ -125,9 +125,9 @@
               <el-table-column label="操作" width="200" style="display: flex;">
                 <template v-slot="scope">
                   <el-button type="primary" plain @click="editRoom(scope.row)" class="edit-btn">
-                    <i class="el-icon-edit"></i>编辑</el-button>
+                    <el-icon><Edit /></el-icon>编辑</el-button>
                   <el-button type="danger" plain @click="deleteRoom(scope)" class="delete-btn">
-                    <i class="el-icon-delete"></i>删除</el-button>
+                    <el-icon><Delete /></el-icon>删除</el-button>
                 </template>
               </el-table-column>
             </el-table>
@@ -143,7 +143,7 @@
             <!-- 添加座位按钮 -->
             <div style="display: flex;">
               <el-button type="primary" @click="showAddSeatDialog" class="add-btn">
-                <i class="el-icon-document-add"></i>添加座位
+                <el-icon><DocumentAdd /></el-icon>添加座位
               </el-button>
             </div>
             <!-- 座位列表 -->
@@ -157,10 +157,10 @@
               <el-table-column label="操作" width="200" style="display: flex;">
                 <template v-slot="scope">
                   <el-button type="primary" plain @click="editSeat(scope.row)" class="edit-btn">
-                    <i class="el-icon-edit"></i>编辑
+                    <el-icon><Edit /></el-icon>编辑
                   </el-button>
                   <el-button type="danger" plain @click="deleteSeat(scope)" class="delete-btn">
-                    <i class="el-icon-delete"></i>删除
+                    <el-icon><Delete /></el-icon>删除
                   </el-button>
                 </template>
               </el-table-column>
@@ -177,7 +177,7 @@
             <!-- 添加用户信息按钮 -->
             <div style="display: flex;">
               <el-button type="primary"  @click="showAddUserDialog" class="add-btn" >
-                <i class="el-icon-document-add"></i>添加用户</el-button>
+                <el-icon><DocumentAdd /></el-icon>添加用户</el-button>
             </div>
             <el-table :data="filteredUserData"
                       :sortable="true"
@@ -210,9 +210,9 @@
               <el-table-column label="操作" width="200" style="display: flex;">
                 <template v-slot="scope">
                   <el-button type="primary" plain @click="editUser(scope.row)" class="edit-btn">
-                    <i class="el-icon-edit"></i>编辑</el-button>
+                    <el-icon><Edit /></el-icon>编辑</el-button>
                   <el-button type="danger" plain @click="deleteUser(scope)" class="delete-btn">
-                    <i class="el-icon-delete"></i>删除</el-button>
+                    <el-icon><Delete /></el-icon>删除</el-button>
                 </template>
               </el-table-column>
             </el-table>
@@ -228,7 +228,7 @@
             <!-- 添加违规信息按钮 -->
             <div style="display: flex;">
               <el-button type="primary" @click="showAddViolationDialog" class="add-btn">
-                <i class="el-icon-document-add"></i>添加违规信息
+                <el-icon><DocumentAdd /></el-icon>添加违规信息
               </el-button>
             </div>
             <el-table :data="filteredViolationData"
@@ -247,11 +247,11 @@
                 <template v-slot="scope">
                   <!-- 编辑违规信息按钮 -->
                   <el-button type="primary" plain @click="editViolation(scope.row)" class="edit-btn">
-                    <i class="el-icon-edit"></i>编辑
+                    <el-icon><Edit /></el-icon>编辑
                   </el-button>
                   <!-- 删除违规信息按钮 -->
                   <el-button type="danger" plain @click="deleteViolation(scope)" class="delete-btn">
-                    <i class="el-icon-delete"></i>删除
+                    <el-icon><Delete /></el-icon>删除
                   </el-button>
                 </template>
               </el-table-column>
@@ -275,10 +275,10 @@
             <template #footer>
               <div class="dialog-footer">
                 <el-button @click="cancelAddViolation" class="cancel-btn">
-                  <i class="el-icon-close"></i>取消
+                  <el-icon><Close /></el-icon>取消
                 </el-button>
                 <el-button type="primary" @click="saveNewViolation" class="save-btn">
-                  <i class="el-icon-check"></i>保存
+                  <el-icon><Check /></el-icon>保存
                 </el-button>
               </div>
             </template>
@@ -312,9 +312,9 @@
             <template #footer>
               <div class="dialog-footer">
                 <el-button @click="editViolationDialogVisible = false" class="cancel-btn">
-                  <i class="el-icon-close"></i>取消</el-button>
+                  <el-icon><Close /></el-icon>取消</el-button>
                 <el-button type="primary" @click="saveEditedViolation" class="save-btn">
-                  <i class="el-icon-check"></i>保存</el-button>
+                  <el-icon><Check /></el-icon>保存</el-button>
               </div>
             </template>
           </el-dialog>
@@ -326,9 +326,9 @@
             <template #footer>
               <div class="dialog-footer">
                 <el-button @click="deleteViolationDialogVisible = false" class="cancel-btn">
-                  <i class="el-icon-close"></i>取消</el-button>
+                  <el-icon><Close /></el-icon>取消</el-button>
                 <el-button type="danger" @click="confirmDeleteViolation" class="delete-btn">
-                  <i class="el-icon-delete"></i>删除</el-button>
+                  <el-icon><Delete /></el-icon>删除</el-button>
               </div>
             </template>
           </el-dialog>
@@ -346,9 +346,9 @@
             <template #footer>
               <div class="dialog-footer">
                 <el-button @click="editRoomDialogVisible = false" class="cancel-btn">
-                  <i class="el-icon-close"></i>取消</el-button>
+                  <el-icon><Close /></el-icon>取消</el-button>
                 <el-button type="primary" @click="saveEditedRoom" class="save-btn">
-                  <i class="el-icon-check"></i>保存</el-button>
+                  <el-icon><Check /></el-icon>保存</el-button>
               </div>
             </template>
           </el-dialog>
@@ -360,9 +360,9 @@
             <template #footer>
               <div class="dialog-footer">
                 <el-button @click="deleteRoomDialogVisible = false" class="cancel-btn">
-                  <i class="el-icon-close"></i>取消</el-button>
+                  <el-icon><Close /></el-icon>取消</el-button>
                 <el-button type="danger" @click="confirmDeleteRoom" class="delete-btn">
-                  <i class="el-icon-delete"></i>删除</el-button>
+                  <el-icon><Delete /></el-icon>删除</el-button>
               </div>
             </template>
           </el-dialog>
@@ -377,9 +377,9 @@
             <template #footer>
               <div class="dialog-footer">
                 <el-button @click="cancelAddRoom" class="cancel-btn">
-                  <i class="el-icon-close"></i>取消</el-button>
+                  <el-icon><Close /></el-icon>取消</el-button>
                 <el-button type="primary" @click="saveNewRoom" class="save-btn">
-                  <i class="el-icon-check"></i>保存</el-button>
+                  <el-icon><Check /></el-icon>保存</el-button>
               </div>
             </template>
           </el-dialog>
@@ -402,9 +402,9 @@
             <template #footer>
               <div class="dialog-footer">
                 <el-button @click="editSeatDialogVisible = false" class="cancel-btn">
-                  <i class="el-icon-close"></i>取消</el-button>
+                  <el-icon><Close /></el-icon>取消</el-button>
                 <el-button type="primary" @click="saveEditedSeat" class="save-btn">
-                  <i class="el-icon-check"></i>保存</el-button>
+                  <el-icon><Check /></el-icon>保存</el-button>
               </div>
             </template>
           </el-dialog>
@@ -416,9 +416,9 @@
             <template #footer>
               <div class="dialog-footer">
                 <el-button tyoe="default" @click="deleteSeatDialogVisible = false" class="cancel-btn">
-                  <i class="el-icon-close"></i>取消</el-button>
+                  <el-icon><Close /></el-icon>取消</el-button>
                 <el-button type="danger" @click="confirmDeleteSeat" class="delete-btn">
-                  <i class="el-icon-delete"></i>删除</el-button>
+                  <el-icon><Delete /></el-icon>删除</el-button>
               </div>
             </template>
           </el-dialog>
@@ -438,9 +438,9 @@
             <template #footer>
               <div class="dialog-footer">
                 <el-button @click="cancelAddSeat" class="cancel-btn">
-                  <i class="el-icon-close"></i>取消</el-button>
+                  <el-icon><Close /></el-icon>取消</el-button>
                 <el-button type="primary" @click="saveNewSeat" class="save-btn">
-                  <i class="el-icon-check"></i>保存</el-button>
+                  <el-icon><Check /></el-icon>保存</el-button>
               </div>
             </template>
           </el-dialog>
@@ -452,9 +452,9 @@
             <template #footer>
               <div class="dialog-footer">
                 <el-button @click="deleteReserveDialogVisible = false" class="cancel-btn">
-                  <i class="el-icon-close"></i>取消</el-button>
+                  <el-icon><Close /></el-icon>取消</el-button>
                 <el-button type="danger" @click="confirmDeleteReserve" class="delete-btn">
-                  <i class="el-icon-delete"></i>删除</el-button>
+                  <el-icon><Delete /></el-icon>删除</el-button>
               </div>
             </template>
           </el-dialog>
@@ -505,9 +505,9 @@
             <template #footer>
               <div class="dialog-footer">
                 <el-button @click="editReserveDialogVisible = false" class="cancel-btn">
-                  <i class="el-icon-close"></i>取消</el-button>
+                  <el-icon><Close /></el-icon>取消</el-button>
                 <el-button type="primary" @click="saveEditedReserve" class="save-btn">
-                  <i class="el-icon-check"></i>保存</el-button>
+                  <el-icon><Check /></el-icon>保存</el-button>
               </div>
             </template>
           </el-dialog>
@@ -555,9 +555,9 @@
             <template #footer>
               <div class="dialog-footer">
                 <el-button @click="cancelAddReserve" class="cancel-btn">
-                  <i class="el-icon-close"></i>取消</el-button>
+                  <el-icon><Close /></el-icon>取消</el-button>
                 <el-button type="primary" @click="saveNewReserve" class="save-btn">
-                  <i class="el-icon-check"></i>保存</el-button>
+                  <el-icon><Check /></el-icon>保存</el-button>
               </div>
             </template>
           </el-dialog>
@@ -590,9 +590,9 @@
             <template #footer>
               <div class="dialog-footer">
                 <el-button @click="editUserDialogVisible = false" class="cancel-btn">
-                  <i class="el-icon-close"></i>取消</el-button>
+                  <el-icon><Close /></el-icon>取消</el-button>
                 <el-button type="primary" @click="saveEditedUser" class="save-btn">
-                  <i class="el-icon-check"></i>保存</el-button>
+                  <el-icon><Check /></el-icon>保存</el-button>
               </div>
             </template>
           </el-dialog>
@@ -604,9 +604,9 @@
             <template #footer>
               <div class="dialog-footer">
                 <el-button @click="deleteUserDialogVisible = false" class="cancel-btn">
-                  <i class="el-icon-close"></i>取消</el-button>
+                  <el-icon><Close /></el-icon>取消</el-button>
                 <el-button type="danger" @click="confirmDeleteUser" class="delete-btn">
-                  <i class="el-icon-delete"></i>删除</el-button>
+                  <el-icon><Delete /></el-icon>删除</el-button>
               </div>
             </template>
           </el-dialog>
@@ -630,9 +630,9 @@
             <template #footer>
               <div class="dialog-footer">
                 <el-button @click="cancelAddUser" class="cancel-btn">
-                  <i class="el-icon-close"></i>取消</el-button>
+                  <el-icon><Close /></el-icon>取消</el-button>
                 <el-button type="primary" @click="saveNewUser" class="save-btn">
-                  <i class="el-icon-check"></i>保存</el-button>
+                  <el-icon><Check /></el-icon>保存</el-button>
               </div>
             </template>
           </el-dialog>

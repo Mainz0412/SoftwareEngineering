@@ -15,7 +15,8 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class UserService {
-  @Resource UserMapper userMapper;
+  @Resource
+  UserMapper userMapper;
 
   /**
    * 根据用户名查询
@@ -47,20 +48,42 @@ public class UserService {
    * @param user 用户
    */
   public void insertUser(User user) {
+    // 加密密码
+    user.setUserPassword(cn.hutool.crypto.digest.BCrypt.hashpw(user.getUserPassword()));
     userMapper.insert(user);
   }
 
   /**
-   * 用户登录
+   * 用户登录 (包含懒迁移逻辑)
    *
    * @param user 用户
    * @return 用户
    */
   public User login(User user) {
-    return userMapper.selectOne(
-        Wrappers.<User>lambdaQuery()
-            .eq(User::getUserAccount, user.getUserAccount())
-            .eq(User::getUserPassword, user.getUserPassword()));
+    // 1. 先根据账号查询用户
+    User dbUser = userMapper.selectOne(
+        Wrappers.<User>lambdaQuery().eq(User::getUserAccount, user.getUserAccount()));
+
+    if (dbUser == null) {
+      return null;
+    }
+
+    // 2. 尝试匹配加密密码
+    if (cn.hutool.crypto.digest.BCrypt.checkpw(user.getUserPassword(), dbUser.getUserPassword())) {
+      return dbUser;
+    }
+
+    // 3. 尝试匹配明文密码 (懒迁移)
+    if (user.getUserPassword().equals(dbUser.getUserPassword())) {
+      // 匹配成功，说明是老用户，立即升级密码
+      String newHash = cn.hutool.crypto.digest.BCrypt.hashpw(user.getUserPassword());
+      dbUser.setUserPassword(newHash);
+      updateUser(dbUser); // 更新数据库
+      return dbUser;
+    }
+
+    // 4. 都不匹配，登录失败
+    return null;
   }
 
   /**
@@ -69,6 +92,19 @@ public class UserService {
    * @param user 用户信息
    */
   public void updateUser(User user) {
+    // 如果更新了密码，需要加密
+    if (user.getUserPassword() != null && !user.getUserPassword().isEmpty()) {
+      // 判断是否已经是加密格式(简单判断长度或前缀，或者直接重新加密)
+      // 这里为了简单，假设前端传来的都是明文，直接加密。
+      // 注意：如果前端传的是空，则不更新密码。
+      // 但这里 update 接口可能包含密码字段。
+      // 更好的做法是检查是否以 $2a$ 开头，但 Hutool BCrypt 没有直接的 isHashed 方法。
+      // 既然是 update，通常是用户修改密码，所以默认视为明文进行加密。
+      // 只有当密码长度 < 20 (BCrypt hash 通常 60 字符) 时才加密，防止重复加密
+      if (user.getUserPassword().length() < 50) {
+        user.setUserPassword(cn.hutool.crypto.digest.BCrypt.hashpw(user.getUserPassword()));
+      }
+    }
     userMapper.update(user, Wrappers.<User>lambdaQuery().eq(User::getUserId, user.getUserId()));
   }
 
@@ -120,8 +156,7 @@ public class UserService {
     user.setUserIllegal(user.getUserIllegal() + 1);
     if (user.getUserIllegal() >= Constant.ILLEGAL_LIMIT) {
       user.setUserIllegalState(Constant.BAN);
-      Timestamp time =
-          Timestamp.valueOf(LocalDateTime.now().plusDays(Constant.BAN_DAY).plusMinutes(480));
+      Timestamp time = Timestamp.valueOf(LocalDateTime.now().plusDays(Constant.BAN_DAY).plusMinutes(480));
       user.setUserIllegalDate(time);
     }
     updateUser(user);

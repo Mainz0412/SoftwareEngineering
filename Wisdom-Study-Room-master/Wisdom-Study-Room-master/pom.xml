@@ -14,7 +14,7 @@
     <name>demo</name>
     <description>Demo project for Spring Boot</description>
     <properties>
-        <java.version>24</java.version>
+        <java.version>25</java.version>
         <!-- Use maven.compiler.release to set the target bytecode and API level -->
         <maven.compiler.release>${java.version}</maven.compiler.release>
     </properties>
@@ -38,7 +38,7 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.18.30</version>
+            <version>1.18.42</version>
             <optional>true</optional>
         </dependency>
         <dependency>
@@ -63,6 +63,12 @@
             <artifactId>java-jwt</artifactId>
             <version>3.18.2</version>
         </dependency>
+        <!-- JSR-250 注解（例如 @Resource）在较新 JDK 中不再随 JDK 提供，添加 api 依赖以恢复编译 -->
+        <dependency>
+            <groupId>javax.annotation</groupId>
+            <artifactId>javax.annotation-api</artifactId>
+            <version>1.3.2</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -70,7 +76,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.11.0</version>
+                <version>3.13.0</version>
                 <configuration>
                     <!-- use release to compile against Java 24 API and target Java 24 bytecode -->
                     <release>${maven.compiler.release}</release>
@@ -78,7 +84,7 @@
                         <path>
                             <groupId>org.projectlombok</groupId>
                             <artifactId>lombok</artifactId>
-                            <version>1.18.30</version>
+                            <version>1.18.42</version>
                         </path>
                     </annotationProcessorPaths>
                 </configuration>

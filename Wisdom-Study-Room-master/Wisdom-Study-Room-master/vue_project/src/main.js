@@ -23,6 +23,11 @@ app.config.globalProperties.$confirm = (msg, title, opts) => ElMessageBox.confir
 app.config.globalProperties.$alert = (msg, title, opts) => ElMessageBox.alert(msg, title, opts)
 app.config.globalProperties.$notify = (opts) => ElNotification(opts)
 
+import * as ElementPlusIconsVue from '@element-plus/icons-vue'
+for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
+  app.component(key, component)
+}
+
 app.mount('#app')
 
 
