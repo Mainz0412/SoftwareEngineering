@@ -35,7 +35,7 @@
         </div>
       </el-header>
 
-      <el-dialog title="修改用户昵称" :visible.sync="modifyUseDialogTab" width="600px">
+      <el-dialog title="修改用户昵称" v-model="modifyUseDialogTab" width="600px">
         <el-form :model="userData" label-width="80px">
           <el-form-item label="用户名" style="margin-bottom: 15px">
             <el-input v-model="userData.userName" placeholder="请输入新昵称"></el-input>
@@ -44,9 +44,10 @@
         <template #footer>
           <div class="dialog-footer">
             <el-button @click="modifyUseDialogTab = false" class="cancel-btn">
-              <el-icon><Close /></el-icon>取消</el-button>
+              <i class="el-icon-close"></i>取消</el-button>
             <el-button type="primary" @click="modifyNickname" class="save-btn">
-              <el-icon><Check /></el-icon>修改</el-button>
+              <i class="el-icon-check"></i>修改</el-button>
+          </div>
           </div>
         </template>
       </el-dialog>
@@ -85,7 +86,7 @@
           <el-card class="box-book-card" v-for="(booking, index) in bookings" :key="index">
             <template #header>
               <div style="margin-top: 10px">
-              <span class="bold">预约信息{{ index + 1 }}</span>
+                <span class="bold">预约信息{{ index + 1 }}</span>
               </div>
             </template>
             <div style="margin-top: -18px">
@@ -103,7 +104,7 @@
           <el-card class="box-book-card" v-for="(vio, index) in violation" :key="index">
             <template #header>
               <div style="margin-top: 10px">
-              <span class="bold">违规信息{{ index + 1 }}</span>
+                <span class="bold">违规信息{{ index + 1 }}</span>
               </div>
             </template>
             <div style="margin-top: -18px">
@@ -121,7 +122,7 @@
       </el-footer>
     </el-container>
 
-    <el-dialog title="预约详情" :visible.sync="Reservedetail" width="420px" style="font-weight: bold;color: black">
+    <el-dialog title="预约详情" v-model="Reservedetail" width="420px" style="font-weight: bold;color: black">
       <div style="margin-top: -25px">
       <p style="margin-left: 65px;font-size: 16px; color: black; font-weight: normal; text-align: left;">预约ID:{{this.bookingnum.reserveId}}</p>
       <p style="margin-left: 65px;font-size: 16px; color: black; font-weight: normal; text-align: left;">预约账号:{{this.bookingnum.reserveUserAccount}}</p>
@@ -142,7 +143,7 @@
       </div>
     </el-dialog>
 
-    <el-dialog title="自习室预约" :visible.sync="dialogTableVisible" width="500px" style="font-weight: bold">
+    <el-dialog title="自习室预约" v-model="dialogTableVisible" width="500px" style="font-weight: bold">
       <el-row class="label-row">
         <span class="label">预约日期: </span>
         <el-date-picker
@@ -199,7 +200,7 @@
           </el-footer>
     </el-dialog>
 
-    <el-dialog title="自习室座位分布" :visible.sync="ModifyTable" width="450px" style="font-weight: bold">
+    <el-dialog title="自习室座位分布" v-model="ModifyTable" width="450px" style="font-weight: bold">
 
       <el-row class="label-row">
         <span class="label">预约日期: </span>
@@ -257,7 +258,7 @@
       </el-footer>
     </el-dialog >
 
-    <el-dialog title="选择要预约的自习室" :visible.sync="Modifyselectroom" style="width: 600px;margin-left: 31%;margin-top:10%">
+    <el-dialog title="选择要预约的自习室" v-model="Modifyselectroom" style="width: 600px;margin-left: 31%;margin-top:10%">
       <el-form>
         <el-select v-model="ModifyroomId" placeholder="请选择自习室" style="margin-bottom: 30px">
           <el-option
@@ -276,7 +277,6 @@
 
 <script>
 import axios from "axios";
-import { ElMessageBox } from 'element-plus';
 export default {
   data() {
     return {
