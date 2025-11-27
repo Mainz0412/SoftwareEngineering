@@ -8,8 +8,8 @@
           <!-- 触发元素改为头像 -->
           <el-avatar
             style="cursor: pointer;"
-            @mouseenter.native="showPopover = true"
-            @mouseleave.native="showPopover = false"
+            @mouseenter="showPopover = true"
+            @mouseleave="showPopover = false"
           >
             <img src="../assets/portrait.png" alt="用户头像">
           </el-avatar>
@@ -22,8 +22,8 @@
             :popper-options="{strategy: 'fixed', modifiers: { flip: { behavior: 'flip' }, preventOverflow: { padding: 10 } } }"
             :popper-append-to-body="false"
             v-model="showPopover"
-            @mouseenter.native="showPopover = true"
-            @mouseleave.native="showPopover = false"
+            @mouseenter="showPopover = true"
+            @mouseleave="showPopover = false"
           >
             <div>
               <h4>昵称: {{userData.userName}}</h4>
@@ -35,18 +35,21 @@
         </div>
       </el-header>
 
-      <el-dialog title="修改用户昵称" :visible.sync="modifyUseDialogTab" width="600px">
+      <el-dialog title="修改用户昵称" v-model="modifyUseDialogTab" width="600px">
         <el-form :model="userData" label-width="80px">
           <el-form-item label="用户名" style="margin-bottom: 15px">
             <el-input v-model="userData.userName" placeholder="请输入新昵称"></el-input>
           </el-form-item>
         </el-form>
-        <div slot="footer" class="dialog-footer">
-          <el-button @click="modifyUseDialogTab = false" class="cancel-btn">
-            <i class="el-icon-close"></i>取消</el-button>
-          <el-button type="primary" @click="modifyNickname" class="save-btn">
-            <i class="el-icon-check"></i>修改</el-button>
-        </div>
+        <template #footer>
+          <div class="dialog-footer">
+            <el-button @click="modifyUseDialogTab = false" class="cancel-btn">
+              <i class="el-icon-close"></i>取消</el-button>
+            <el-button type="primary" @click="modifyNickname" class="save-btn">
+              <i class="el-icon-check"></i>修改</el-button>
+          </div>
+          </div>
+        </template>
       </el-dialog>
 
       <el-menu default-active="home" class="el-menu-horizontal-demo" @select="handleMenuSelect">
@@ -81,9 +84,11 @@
 
         <div class="card-container" v-else-if="activeMenuItem === 'mybook'">
           <el-card class="box-book-card" v-for="(booking, index) in bookings" :key="index">
-            <div slot="header" style="margin-top: 10px">
-              <span class="bold">预约信息{{ index + 1 }}</span>
-            </div>
+            <template #header>
+              <div style="margin-top: 10px">
+                <span class="bold">预约信息{{ index + 1 }}</span>
+              </div>
+            </template>
             <div style="margin-top: -18px">
               <p>日期: {{ booking.reserveTimeBegin.split(' ')[0] }}</p>
               <p>起始时间: {{ booking.reserveTimeBegin.split(' ')[1] }}</p>
@@ -97,9 +102,11 @@
 
         <div class="card-container" v-else-if="activeMenuItem === 'violation'">
           <el-card class="box-book-card" v-for="(vio, index) in violation" :key="index">
-            <div slot="header" style="margin-top: 10px">
-              <span class="bold">违规信息{{ index + 1 }}</span>
-            </div>
+            <template #header>
+              <div style="margin-top: 10px">
+                <span class="bold">违规信息{{ index + 1 }}</span>
+              </div>
+            </template>
             <div style="margin-top: -18px">
               <p style="margin-bottom: 40px">违规账号: {{vio.userAccount}}</p>
               <p style="margin-bottom: 40px">违规信息: {{vio.logState}}</p>
@@ -115,7 +122,7 @@
       </el-footer>
     </el-container>
 
-    <el-dialog title="预约详情" :visible.sync="Reservedetail" width="420px" style="font-weight: bold;color: black">
+    <el-dialog title="预约详情" v-model="Reservedetail" width="420px" style="font-weight: bold;color: black">
       <div style="margin-top: -25px">
       <p style="margin-left: 65px;font-size: 16px; color: black; font-weight: normal; text-align: left;">预约ID:{{this.bookingnum.reserveId}}</p>
       <p style="margin-left: 65px;font-size: 16px; color: black; font-weight: normal; text-align: left;">预约账号:{{this.bookingnum.reserveUserAccount}}</p>
@@ -136,7 +143,7 @@
       </div>
     </el-dialog>
 
-    <el-dialog title="自习室预约" :visible.sync="dialogTableVisible" width="500px" style="font-weight: bold">
+    <el-dialog title="自习室预约" v-model="dialogTableVisible" width="500px" style="font-weight: bold">
       <el-row class="label-row">
         <span class="label">预约日期: </span>
         <el-date-picker
@@ -193,7 +200,7 @@
           </el-footer>
     </el-dialog>
 
-    <el-dialog title="自习室座位分布" :visible.sync="ModifyTable" width="450px" style="font-weight: bold">
+    <el-dialog title="自习室座位分布" v-model="ModifyTable" width="450px" style="font-weight: bold">
 
       <el-row class="label-row">
         <span class="label">预约日期: </span>
@@ -251,7 +258,7 @@
       </el-footer>
     </el-dialog >
 
-    <el-dialog title="选择要预约的自习室" :visible.sync="Modifyselectroom" style="width: 600px;margin-left: 31%;margin-top:10%">
+    <el-dialog title="选择要预约的自习室" v-model="Modifyselectroom" style="width: 600px;margin-left: 31%;margin-top:10%">
       <el-form>
         <el-select v-model="ModifyroomId" placeholder="请选择自习室" style="margin-bottom: 30px">
           <el-option
@@ -270,7 +277,6 @@
 
 <script>
 import axios from "axios";
-import {MessageBox} from "element-ui";
 export default {
   data() {
     return {

@@ -1,9 +1,6 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
+import { createRouter, createWebHistory } from 'vue-router'
 import axios from 'axios'
-import {MessageBox} from "element-ui";
-import ElementUI from 'element-ui';
-Vue.use(VueRouter)
+import { ElMessageBox, ElMessage } from 'element-plus'
 
 const routes = [
   {
@@ -33,12 +30,9 @@ const routes = [
       const getUserAccount = sessionStorage.getItem('userAccount')
       if(getUserAccount === null)
       {
-        MessageBox.alert('请先登录', '提示', {
-          confirmButtonText: '确定',
-          callback: action => {
-            next({ name: 'LoginView' })
-          }
-        })
+        ElMessageBox.alert('请先登录', '提示', {
+          confirmButtonText: '确定'
+        }).then(() => { next({ name: 'LoginView' }) })
       }
       else
       {
@@ -50,12 +44,9 @@ const routes = [
             const vio = violationData[0]
             if (vio.userIllegalState === 1)
             {
-              MessageBox.alert(`用户违规,直到${vio.userIllegalDate}`, '提示', {
-                confirmButtonText: '确定',
-                callback: action => {
-                  next({ name: 'LoginView' })
-                }
-              })
+              ElMessageBox.alert(`用户违规,直到${vio.userIllegalDate}`, '提示', {
+                confirmButtonText: '确定'
+              }).then(() => { next({ name: 'LoginView' }) })
             }
             else{
               next()
@@ -63,7 +54,7 @@ const routes = [
           }
         }).catch(error => {
           console.error('鉴权错误:', error);
-          this.$message.error('鉴权错误,请稍后重试');
+          ElMessage({ message: '鉴权错误,请稍后重试', type: 'error' })
         })
       }
     }
@@ -76,12 +67,9 @@ const routes = [
     beforeEnter: (to, from, next) => {
       const getUserAccount = sessionStorage.getItem('userAccount') ;
       if (!getUserAccount) {
-        ElementUI.MessageBox.alert('请先登录', '提示', {
-          confirmButtonText: '去登录',
-          callback: action => {
-            next({ name: 'LoginView' });
-          }
-        });
+        ElMessageBox.alert('请先登录', '提示', {
+          confirmButtonText: '去登录'
+        }).then(() => { next({ name: 'LoginView' }); });
         return;
       }
       const url = `user/list?userAccount=${getUserAccount}`;
@@ -90,24 +78,18 @@ const routes = [
           const userData = response.data[0];
           const userPrivilege = userData.userPrivilege;
           if (userPrivilege === 0) {
-            ElementUI.MessageBox.alert('您没有权限访问管理员界面', '错误', {
-              confirmButtonText: '返回',
-              callback: action => {
-                next({ name: 'HomeView' });
-              }
-            });
+            ElMessageBox.alert('您没有权限访问管理员界面', '错误', {
+              confirmButtonText: '返回'
+            }).then(() => { next({ name: 'HomeView' }); });
             return;
           }
           next();
         })
         .catch(error => {
           console.error('鉴权失败:', error);
-          ElementUI.MessageBox.alert('鉴权失败，请稍后重试或联系管理员', '错误', {
-            confirmButtonText: '返回首页',
-            callback: action => {
-              next({ name: 'HomeView' });
-            }
-          });
+          ElMessageBox.alert('鉴权失败，请稍后重试或联系管理员', '错误', {
+            confirmButtonText: '返回首页'
+          }).then(() => { next({ name: 'HomeView' }); });
         });
     }
   },
@@ -120,8 +102,8 @@ const routes = [
 
 ]
 
-const router = new VueRouter({
-  mode: 'history',
+const router = createRouter({
+  history: createWebHistory(process.env.BASE_URL),
   routes
 })
 
